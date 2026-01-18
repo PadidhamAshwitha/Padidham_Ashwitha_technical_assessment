@@ -1,70 +1,176 @@
-# Getting Started with Create React App
+# 🚀VectorShift Frontend Technical Assessment
+## Pipeline Builder – React Flow + Tailwind CSS + FastAPI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository contains a **node-based pipeline builder** developed as part of the **VectorShift Frontend Technical Assessment**.  
+The project demonstrates **clean abstractions, scalable architecture, and production-ready frontend practices**, closely inspired by VectorShift’s workflow editor.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Key Features
 
-### `npm start`
+### 1. Node Abstraction
+- A **single reusable `BaseNode` component** is used by all nodes
+- Eliminates duplicated JSX and logic
+- Enables fast creation of new node types with consistent UI/UX
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 2. Available Node Types
+- **Input Node** (singleton)
+- **Text Node** (dynamic variables)
+- **LLM Node**
+- **API Node**
+- **Condition Node**
+- **Math Node**
+- **Delay Node**
+- **Merge Node**
+- **Output Node**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 3. Text Node Intelligence
+- Auto-resizing textarea based on content
+- Supports dynamic variables using:
 
-### `npm test`
+## {{variableName}}
+- Each variable automatically creates a **target handle**
+- Handles update dynamically as text changes
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 4. UI & Styling
+- Built entirely with **Tailwind CSS**
+- VectorShift-inspired purple / dark gradient theme
+- Clean spacing, typography, and modern SaaS-style visuals
+- React Flow canvas with background grid, minimap, and controls
 
-### `npm run build`
+### 5. Node Creation Experience
+- Drag-and-drop nodes from toolbar
+- Modal-based node addition
+- Node types are disabled once added
+- Deleted nodes can be re-added
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 6. Singleton Node Enforcement
+- Certain nodes (e.g., Input, Output) are restricted to one instance
+- Enforced centrally in the Zustand store
+- UI automatically reflects availability
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 6. Backend Integration
+- FastAPI backend endpoint:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## POST/pipelines/parse
+- Frontend sends:
+- Nodes
+- Edges
+- Backend response format:
+```json
+{
+  "num_nodes": 8,
+  "num_edges": 7,
+  "is_dag": true
+}
+```
+## Tech Stack
 
-### `npm run eject`
+### Frontend
+- **React 18**
+- **React Flow**
+- **Tailwind CSS**
+- **Zustand** (state management)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Backend
+- **Python**
+- **FastAPI**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Project Structure
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+.
+├── backend
+│   ├── main.py
+│   └── __pycache__/
+│
+├── frontend
+│   ├── public
+│   │   └── index.html
+│   │
+│   ├── src
+│   │   ├── components
+│   │   │   ├── AddNodeModal.js
+│   │   │   ├── DraggableNode.js
+│   │   │   ├── Submit.js
+│   │   │   ├── Toolbar.js
+│   │   │   └── Ui.js
+│   │   │
+│   │   ├── hooks
+│   │   │   └── useNodeTypes.js
+│   │   │
+│   │   ├── nodes
+│   │   │   ├── BaseNode.js
+│   │   │   ├── InputNode.js
+│   │   │   ├── TextNode.js
+│   │   │   ├── LLMNode.js
+│   │   │   ├── APINode.js
+│   │   │   ├── ConditionNode.js
+│   │   │   ├── MathNode.js
+│   │   │   ├── DelayNode.js
+│   │   │   ├── MergeNode.js
+│   │   │   └── OutputNode.js
+│   │   │
+│   │   ├── App.js
+│   │   ├── index.js
+│   │   ├── index.css
+│   │   └── store.js
+│   │
+│   ├── tailwind.config.js
+│   ├── postcss.config.js
+│   └── package.json
+│
+├── README.md
+└── .gitignore
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Setup Instructions
 
-### Code Splitting
+### 1️. Backend Setup
+```bash
+cd backend
+pip install fastapi uvicorn
+uvicorn main:app --reload
+```
+### backend will be available at:
+- http://localhost:8000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 2️. Frontend Setup
 
-### Analyzing the Bundle Size
+```bash
+cd frontend
+npm install
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Frontend will be available at: 
+http://localhost:3000
 
-### Making a Progressive Web App
+## How to Use
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Launch both frontend and backend servers
+2. Add nodes via the toolbar or modal
+3. Connect nodes using the available handles
+4. Use `{{variable}}` syntax inside the Text Node
+5. Click **Submit**
+6. View:
+   - Total nodes
+   - Total edges
+   - DAG validation result
 
-### Advanced Configuration
+## Future Enhancements
+- Searchable node palette
+- Undo / redo support
+- Pipeline persistence
+- Execution engine
+- Node configuration side panels
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## Author
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Padidham Ashwitha**  
+Frontend Developer | React | UI Engineering
